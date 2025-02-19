@@ -4,6 +4,7 @@
 1. [Default Behavior of Spring Security](#default-behavior-of-spring-security)
 2. [Setting Up Spring Security Configuration](#setting-up-spring-security-configuration)
 3. [Changing Default Login Method](#changing-default-login-method)
+4. [User Details Manager](#user-details-manager)
 
 ---
 
@@ -57,6 +58,44 @@ public class SecurityConfig {
         http.httpBasic(Customizer.withDefaults());
         
         return (SecurityFilterChain)http.build();
+    }
+}
+```
+### Form-Based Authentication vs. Basic Authentication
+
+| Feature                 | Form-Based Authentication      | Basic Authentication                              |
+|-------------------------|--------------------------------|---------------------------------------------------|
+| **Login Interface**     | HTML login form                | Browser popup or API header                       |
+| **Session Management**  | Uses `JSESSIONID`              | Stateless (no session)                            |
+| **Best for**            | Web applications               | REST APIs                                         |
+| **Security Level**      | High (if HTTPS is used)        | Secure, but credentials are sent on every request |
+| **User Experience**     | User-friendly                  | Less user-friendly                                |
+| **Logout Feature**      | Yes (supports logout endpoint) | No (requires client-side handling)                |
+___
+
+## User Details Manager
+Creating user detail manager with the help of InMemoryUserDetailsManager class 
+```java
+@Configuration
+public class SecurityConfig {
+    
+/// in memory user details manager for login with role and password
+@Bean
+public UserDetailsService userDetailsService() {
+        /*
+        {noop} tells Spring Security not to encode the password.
+
+        UserDetails user1 = User.withUsername("user1").password("{noop}password1").roles("USER").build();
+        UserDetails admin = User.withUsername("admin").password("{noop}adminpass").roles("ADMIN").build();
+        
+        */
+
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder(); /// encoder
+    
+        UserDetails user1 = User.withUsername("user1").password(encoder.encode("password1")).roles("USER").build();
+        UserDetails admin = User.withUsername("admin").password(encoder.encode("adminpass")).roles("ADMIN").build();
+    
+        return new InMemoryUserDetailsManager(user1, admin);
     }
 }
 ```
