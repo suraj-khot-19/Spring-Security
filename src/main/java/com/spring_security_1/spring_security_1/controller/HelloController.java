@@ -14,14 +14,14 @@ public class HelloController {
     }
 
     /// only access for user
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/user")
     public String helloUser(){
         return "Hello User!";
     }
 
     /// only access for admin
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin")
     public String helloAdmin(){
         return "Hello Admin!";

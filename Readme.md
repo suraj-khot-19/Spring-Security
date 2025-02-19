@@ -100,9 +100,10 @@ public UserDetailsService userDetailsService() {
     }
 }
 ```
+___
 
 ## 5. Role Based Access
-@PreAuthorize("hasRole('ROLE')"), @Configuration and @EnableMethodSecurity this annotations helps us for role based access
+@PreAuthorize("hasRole('ROLE')"), @Configuration and @EnableMethodSecurity these annotations helps us for role based access
 1. Spring Configuration
     ```java
     @Configuration ///  tells spring it has some configuration
@@ -134,14 +135,14 @@ public UserDetailsService userDetailsService() {
     }
 
     /// only access for user
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/user")
     public String helloUser(){
         return "Hello User!";
     }
 
     /// only access for admin
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin")
     public String helloAdmin(){
         return "Hello Admin!";
@@ -157,7 +158,7 @@ public UserDetailsService userDetailsService() {
     "path": "/admin"
     }
     ```
-## 📌 4. Key Features of Role-Based Access Control
+4. Key Features of Role-Based Access Control
 
 | Feature                                            | Description                                                  |
 |----------------------------------------------------|--------------------------------------------------------------|
